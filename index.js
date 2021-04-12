@@ -28,7 +28,7 @@ const people = [
 
 // Array.prototype.filter()
 // 1. Filter the list of inventors for those who were born in the 1500's
-const filterInventors = inventors.filter(elem => elem.year >= 1500 && elem.year <= 1599 );
+const filterInventors = inventors.filter(elem => elem.year >= 1500 && elem.year <= 1599);
 console.table(filterInventors);
 
 // Array.prototype.map()
@@ -40,19 +40,50 @@ console.log(nameOfInventors);
 
 // Array.prototype.sort()
 // 3. Sort the inventors by birthdate, oldest to youngest
+const bdSort = inventors.sort((a, b) => {
+  return a.year - b.year;
+})
+console.table(bdSort);
 
 // Array.prototype.reduce()
 // 4. How many years did all the inventors live all together?
+const years = inventors.reduce((total, elem) => {
+  return total + (elem.passed - elem.year)
+}, 0)
+console.log(years);
 
-// 5. Sort the inventors by years lived
+// 5. Sort the inventors by years lived (died young comes first)
+const yearLived = inventors.sort((a, b) => {
+  return (a.passed - a.year) - (b.passed - b.year);
+})
+console.table(yearLived);
 
 // 6. create a list of Boulevards in Paris that contain 'de' anywhere in the name
 // https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
+const boulevardsInParis = ["Boulevard Auguste-Blanqui", "Boulevard Barbès", "Boulevard Beaumarchais", "Boulevard de l'Amiral-Bruix", "Boulevard Mortier", "Boulevard Poniatowski", "Boulevard Soult", "Boulevard des Capucines", "Boulevard de la Chapelle", "Boulevard de Clichy", "Boulevard du Crime", "Boulevard du Général-d'Armée-Jean-Simon", "Boulevard Haussmann"];
 
+const boulevardList = boulevardsInParis.filter((elem) => elem.includes("de"));
+console.log(boulevardList);
 
 // 7. sort Exercise
 // Sort the people alphabetically by last name
+const sortPeople = people.sort((a, b) => {
+  const [alast, afirst] = a.split(", ");
+  const [blast, bfirst] = b.split(", ");
+  return alast > blast ? 1 : -1; //need  if statment ES6 version
+})
+console.log(sortPeople);
 
 // 8. Reduce Exercise
 // Sum up the instances of each of these
 const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck'];
+
+const sumUp = data.reduce((obj, elem) => {
+  console.log(elem);
+  if (!obj[elem]) { //set 0 in default when it is the fist time to add element in to the object
+    obj[elem] = 0;
+  }
+  obj[elem]++;
+  return obj;
+}, {}); // prepare an empty object
+console.log(sumUp);
